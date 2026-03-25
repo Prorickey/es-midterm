@@ -132,7 +132,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     chart.draw_series(points.iter().map(|&(lon, lat, doy)| {
         let t = (doy as f64 - 1.0) / 365.0;
-        let color = blend_white(twilight_shifted(t), 0.4);
+        let color = blend_white(twilight_shifted(t), 0.8);
         Circle::new((lon, lat), 2, color.filled())
     }))?;
 

@@ -33,23 +33,21 @@ Supporting reference files are included in `data/`:
 
 ## Requirements
 
-- Python 3.12+
-- pandas
-- numpy
+- [Rust](https://www.rust-lang.org/tools/install) (2021 edition)
 
 ## Setup
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install pandas numpy
+cargo build
 ```
 
 ## Usage
 
 ```bash
-python data.py
+cargo run
 ```
+
+This parses the eBird TSV, prints date/latitude/longitude ranges, and saves a scatter plot colored by month to `figures/sightings_scatter.png`.
 
 ## Data Terms of Use
 
