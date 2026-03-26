@@ -1,9 +1,11 @@
 mod colormap;
 mod data;
 mod monthly_heatmap;
+mod monthly_latitude;
 mod nesting_latitude;
 mod scatter;
 mod seasonal_range;
+mod yearly_monthly_latitude;
 
 use std::error::Error;
 
@@ -23,6 +25,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     seasonal_range::generate(&observations, &bounds)?;
     monthly_heatmap::generate(&observations, &bounds)?;
     nesting_latitude::generate(&observations)?;
+    monthly_latitude::generate(&observations)?;
+    yearly_monthly_latitude::generate(&observations)?;
 
     Ok(())
 }
