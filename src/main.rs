@@ -1,5 +1,6 @@
 mod colormap;
 mod data;
+mod julian_date;
 mod monthly_heatmap;
 mod monthly_latitude;
 mod nesting_latitude;
@@ -27,6 +28,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     nesting_latitude::generate(&observations)?;
     monthly_latitude::generate(&observations)?;
     yearly_monthly_latitude::generate(&observations)?;
+    julian_date::generate(&observations)?;
 
     Ok(())
 }
