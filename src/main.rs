@@ -8,7 +8,7 @@ use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let (observations, bounds) =
-        data::load_observations("data/ebd_CA_sancra_relFeb-2026.tsv")?;
+        data::load_observations("data/ebd_sancra_relFeb-2026.tsv")?;
 
     println!(
         "Date Range: [{} - {}]",

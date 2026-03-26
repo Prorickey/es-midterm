@@ -12,7 +12,7 @@ The observation data is sourced from the [eBird Basic Dataset](https://ebird.org
 
 > eBird Basic Dataset. Version: EBD_relFeb-2026. Cornell Lab of Ornithology, Ithaca, New York. Feb 2026.
 
-The dataset file (`data/ebd_CA_sancra_relFeb-2026.tsv`) contains eBird records filtered for:
+The dataset file (`data/ebd_sancra_relFeb-2026.tsv`) contains eBird records filtered for:
 
 - **Species:** Sandhill Crane (*Antigone canadensis*)
 - **Country:** Canada (CA)

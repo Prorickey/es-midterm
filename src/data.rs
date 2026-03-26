@@ -21,6 +21,7 @@ pub struct DataBounds {
 pub fn load_observations(path: &str) -> Result<(Vec<Observation>, DataBounds), Box<dyn Error>> {
     let mut rdr = csv::ReaderBuilder::new()
         .delimiter(b'\t')
+        .flexible(true)
         .from_path(path)?;
 
     let headers = rdr.headers()?.clone();
