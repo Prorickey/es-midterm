@@ -1,5 +1,7 @@
-use chrono::NaiveDate;
+use chrono::{Datelike, NaiveDate};
 use std::error::Error;
+
+const MIN_YEAR: i32 = 1925;
 
 pub struct Observation {
     pub lat: f64,
@@ -55,6 +57,9 @@ pub fn load_observations(path: &str) -> Result<(Vec<Observation>, DataBounds), B
             },
             _ => continue,
         };
+        if date.year() < MIN_YEAR {
+            continue;
+        }
         let lat: f64 = match rec.get(lat_idx).and_then(|s| s.parse().ok()) {
             Some(v) => v,
             None => continue,

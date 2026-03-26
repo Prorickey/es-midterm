@@ -1,6 +1,7 @@
 mod colormap;
 mod data;
 mod monthly_heatmap;
+mod nesting_latitude;
 mod scatter;
 mod seasonal_range;
 
@@ -21,6 +22,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     scatter::generate(&observations, &bounds)?;
     seasonal_range::generate(&observations, &bounds)?;
     monthly_heatmap::generate(&observations, &bounds)?;
+    nesting_latitude::generate(&observations)?;
 
     Ok(())
 }
