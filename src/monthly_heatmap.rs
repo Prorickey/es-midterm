@@ -57,6 +57,8 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn 
                     date: o.date,
                     state: o.state.clone(),
                     count: o.count,
+                    breeding_code: o.breeding_code.clone(),
+                    breeding_category: o.breeding_category.clone(),
                 }).collect::<Vec<_>>(),
                 bounds,
             );
@@ -84,6 +86,8 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn 
                 date: o.date,
                 state: o.state.clone(),
                 count: o.count,
+                breeding_code: o.breeding_code.clone(),
+                breeding_category: o.breeding_category.clone(),
             })
             .collect();
 

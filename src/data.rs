@@ -9,6 +9,8 @@ pub struct Observation {
     pub date: NaiveDate,
     pub state: String,
     pub count: Option<u32>,
+    pub breeding_code: String,
+    pub breeding_category: String,
 }
 
 pub struct DataBounds {
@@ -38,6 +40,8 @@ pub fn load_observations(path: &str) -> Result<(Vec<Observation>, DataBounds), B
     let lon_idx = col("LONGITUDE")?;
     let state_idx = col("STATE")?;
     let count_idx = col("OBSERVATION COUNT")?;
+    let breeding_code_idx = col("BREEDING CODE")?;
+    let breeding_category_idx = col("BREEDING CATEGORY")?;
 
     let mut observations: Vec<Observation> = Vec::new();
     let mut min_date: Option<NaiveDate> = None;
@@ -70,6 +74,8 @@ pub fn load_observations(path: &str) -> Result<(Vec<Observation>, DataBounds), B
         };
         let state = rec.get(state_idx).unwrap_or("").to_string();
         let count = rec.get(count_idx).and_then(|s| s.parse::<u32>().ok());
+        let breeding_code = rec.get(breeding_code_idx).unwrap_or("").to_string();
+        let breeding_category = rec.get(breeding_category_idx).unwrap_or("").to_string();
 
         min_date = Some(min_date.map_or(date, |d: NaiveDate| d.min(date)));
         max_date = Some(max_date.map_or(date, |d: NaiveDate| d.max(date)));
@@ -84,6 +90,8 @@ pub fn load_observations(path: &str) -> Result<(Vec<Observation>, DataBounds), B
             date,
             state,
             count,
+            breeding_code,
+            breeding_category,
         });
     }
 
