@@ -5,7 +5,7 @@ use std::error::Error;
 use crate::colormap::{blend_white, twilight_shifted};
 use crate::data::Observation;
 
-pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
     let points: Vec<(f64, f64)> = obs
         .iter()
         .map(|o| (o.date.year() as f64, o.date.ordinal() as f64))
@@ -21,7 +21,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
     let (width, height) = (1800u32, 1200u32);
     let cbar_strip = 130u32;
     let root =
-        BitMapBackend::new("figures/julian_date.png", (width, height)).into_drawing_area();
+        BitMapBackend::new(path, (width, height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let (plot_area, cbar_area) = root.split_horizontally((width - cbar_strip) as i32);
@@ -98,7 +98,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
     cbar_area.draw(&Text::new("Month", (cb_x, cb_top - 22), ("sans-serif", 15)))?;
 
     root.present()?;
-    println!("Saved: figures/julian_date.png");
+    println!("Saved: {path}");
 
     Ok(())
 }

@@ -9,7 +9,7 @@ const MONTH_LABELS: [&str; 12] = [
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
-pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
     // Compute mean latitude per month (1..=12)
     let mut month_sums = [0.0f64; 12];
     let mut month_counts = [0u64; 12];
@@ -46,7 +46,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
 
     let (width, height) = (1800u32, 1200u32);
     let root =
-        BitMapBackend::new("figures/monthly_latitude.png", (width, height)).into_drawing_area();
+        BitMapBackend::new(path, (width, height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let mut chart = ChartBuilder::on(&root)
@@ -84,7 +84,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
     }))?;
 
     root.present()?;
-    println!("Saved: figures/monthly_latitude.png");
+    println!("Saved: {path}");
 
     Ok(())
 }

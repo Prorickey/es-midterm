@@ -32,7 +32,7 @@ const CATEGORIES: &[Category] = &[
     },
 ];
 
-pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<(), Box<dyn Error>> {
     let breeding_obs: Vec<&Observation> = obs
         .iter()
         .filter(|o| !o.breeding_code.is_empty())
@@ -40,7 +40,7 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn 
 
     let (width, height) = (1800u32, 1200u32);
     let root =
-        BitMapBackend::new("figures/breeding_evidence.png", (width, height)).into_drawing_area();
+        BitMapBackend::new(path, (width, height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let lat_pad = (bounds.max_lat - bounds.min_lat) * 0.02;
@@ -93,7 +93,7 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn 
 
     root.present()?;
     println!(
-        "Saved: figures/breeding_evidence.png ({} breeding records)",
+        "Saved: {path} ({} breeding records)",
         breeding_obs.len()
     );
 

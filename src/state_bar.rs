@@ -6,7 +6,7 @@ use crate::data::Observation;
 
 const BAR_COLOR: RGBColor = RGBColor(70, 130, 180);
 
-pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
     let mut counts: HashMap<&str, u32> = HashMap::new();
     for o in obs {
         if !o.state.is_empty() {
@@ -28,7 +28,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
 
     let (width, height) = (1800u32, 1200u32);
     let root =
-        BitMapBackend::new("figures/state_observations.png", (width, height)).into_drawing_area();
+        BitMapBackend::new(path, (width, height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let mut chart = ChartBuilder::on(&root)
@@ -75,7 +75,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
     }
 
     root.present()?;
-    println!("Saved: figures/state_observations.png");
+    println!("Saved: {path}");
 
     Ok(())
 }

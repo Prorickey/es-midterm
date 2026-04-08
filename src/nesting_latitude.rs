@@ -5,7 +5,7 @@ use std::error::Error;
 
 use crate::data::Observation;
 
-pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
     // Group November observations by year, compute mean latitude per year
     let mut year_lats: BTreeMap<i32, Vec<f64>> = BTreeMap::new();
     for o in obs.iter().filter(|o| o.date.month() == 11) {
@@ -58,7 +58,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
 
     let (width, height) = (1800u32, 1200u32);
     let root =
-        BitMapBackend::new("figures/nesting_latitude.png", (width, height)).into_drawing_area();
+        BitMapBackend::new(path, (width, height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let mut chart = ChartBuilder::on(&root)
@@ -116,7 +116,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
     )))?;
 
     root.present()?;
-    println!("Saved: figures/nesting_latitude.png");
+    println!("Saved: {path}");
 
     Ok(())
 }

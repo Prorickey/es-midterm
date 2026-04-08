@@ -8,7 +8,7 @@ use crate::data::{DataBounds, Observation};
 const WINTER_COLOR: RGBColor = RGBColor(70, 130, 180);
 const SUMMER_COLOR: RGBColor = RGBColor(205, 92, 92);
 
-pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<(), Box<dyn Error>> {
     let winter: Vec<&Observation> = obs
         .iter()
         .filter(|o| matches!(o.date.month(), 12 | 1 | 2))
@@ -19,7 +19,7 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn 
         .collect();
 
     let (width, height) = (1800u32, 1200u32);
-    let root = BitMapBackend::new("figures/seasonal_range.png", (width, height))
+    let root = BitMapBackend::new(path, (width, height))
         .into_drawing_area();
     root.fill(&WHITE)?;
 
@@ -58,7 +58,7 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn 
     }
 
     root.present()?;
-    println!("Saved: figures/seasonal_range.png");
+    println!("Saved: {path}");
 
     Ok(())
 }

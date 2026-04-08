@@ -109,3 +109,33 @@ pub fn load_observations(path: &str) -> Result<(Vec<Observation>, DataBounds), B
 
     Ok((observations, bounds))
 }
+
+pub fn compute_bounds(obs: &[Observation]) -> Result<DataBounds, Box<dyn Error>> {
+    if obs.is_empty() {
+        return Err("no observations found".into());
+    }
+    let mut min_lat = f64::INFINITY;
+    let mut max_lat = f64::NEG_INFINITY;
+    let mut min_lon = f64::INFINITY;
+    let mut max_lon = f64::NEG_INFINITY;
+    let mut min_date = obs[0].date;
+    let mut max_date = obs[0].date;
+
+    for o in obs {
+        min_lat = min_lat.min(o.lat);
+        max_lat = max_lat.max(o.lat);
+        min_lon = min_lon.min(o.lon);
+        max_lon = max_lon.max(o.lon);
+        min_date = min_date.min(o.date);
+        max_date = max_date.max(o.date);
+    }
+
+    Ok(DataBounds {
+        min_lat,
+        max_lat,
+        min_lon,
+        max_lon,
+        min_date,
+        max_date,
+    })
+}

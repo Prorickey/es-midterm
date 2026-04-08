@@ -33,7 +33,7 @@ const CATEGORIES: &[Category] = &[
     },
 ];
 
-pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
     let breeding_obs: Vec<&Observation> = obs
         .iter()
         .filter(|o| !o.breeding_code.is_empty())
@@ -56,7 +56,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
 
     let (width, height) = (1800u32, 1200u32);
     let root =
-        BitMapBackend::new("figures/breeding_latitude.png", (width, height)).into_drawing_area();
+        BitMapBackend::new(path, (width, height)).into_drawing_area();
     root.fill(&WHITE)?;
 
     let mut chart = ChartBuilder::on(&root)
@@ -124,7 +124,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
 
     root.present()?;
     println!(
-        "Saved: figures/breeding_latitude.png ({} breeding records)",
+        "Saved: {path} ({} breeding records)",
         breeding_obs.len()
     );
 

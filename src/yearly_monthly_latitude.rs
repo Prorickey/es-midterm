@@ -10,7 +10,7 @@ fn year_month_to_x(year: i32, month: u32) -> f64 {
     year as f64 + (month as f64 - 1.0) / 12.0
 }
 
-pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
     // Group by (year, month) and compute mean latitude
     let mut buckets: BTreeMap<(i32, u32), (f64, u64)> = BTreeMap::new();
     for o in obs {
@@ -64,7 +64,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
     let lat_pad = (lat_max - lat_min) * 0.10;
 
     let (width, height) = (1800u32, 1200u32);
-    let root = BitMapBackend::new("figures/yearly_monthly_latitude.png", (width, height))
+    let root = BitMapBackend::new(path, (width, height))
         .into_drawing_area();
     root.fill(&WHITE)?;
 
@@ -129,7 +129,7 @@ pub fn generate(obs: &[Observation]) -> Result<(), Box<dyn Error>> {
     )))?;
 
     root.present()?;
-    println!("Saved: figures/yearly_monthly_latitude.png");
+    println!("Saved: {path}");
 
     Ok(())
 }

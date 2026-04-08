@@ -5,11 +5,11 @@ use std::error::Error;
 use crate::colormap::{blend_white, twilight_shifted};
 use crate::data::{DataBounds, Observation};
 
-pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<(), Box<dyn Error>> {
     let (width, height) = (1800u32, 1200u32);
     let cbar_strip = 130u32;
 
-    let root = BitMapBackend::new("figures/sightings_scatter.png", (width, height))
+    let root = BitMapBackend::new(path, (width, height))
         .into_drawing_area();
     root.fill(&WHITE)?;
 
@@ -93,7 +93,7 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds) -> Result<(), Box<dyn 
     cbar_area.draw(&Text::new("Month", (cb_x, cb_top - 22), ("sans-serif", 15)))?;
 
     root.present()?;
-    println!("Saved: figures/sightings_scatter.png");
+    println!("Saved: {path}");
 
     Ok(())
 }
