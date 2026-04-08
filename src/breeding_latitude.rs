@@ -33,7 +33,7 @@ const CATEGORIES: &[Category] = &[
     },
 ];
 
-pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     let breeding_obs: Vec<&Observation> = obs
         .iter()
         .filter(|o| !o.breeding_code.is_empty())
@@ -64,7 +64,7 @@ pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
         .x_label_area_size(50u32)
         .y_label_area_size(70u32)
         .caption(
-            "Breeding Evidence by Date and Latitude",
+            format!("Breeding Evidence by Date and Latitude{subtitle}"),
             ("sans-serif", 28),
         )
         .build_cartesian_2d(1u32..366u32, (lat_min - lat_pad)..(lat_max + lat_pad))?;

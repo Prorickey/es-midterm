@@ -5,7 +5,7 @@ use std::error::Error;
 
 use crate::data::Observation;
 
-pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     // Group November observations by year, compute mean latitude per year
     let mut year_lats: BTreeMap<i32, Vec<f64>> = BTreeMap::new();
     for o in obs.iter().filter(|o| o.date.month() == 11) {
@@ -66,7 +66,7 @@ pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
         .x_label_area_size(50u32)
         .y_label_area_size(70u32)
         .caption(
-            "Mean November Latitude by Year",
+            format!("Mean November Latitude by Year{subtitle}"),
             ("sans-serif", 28),
         )
         .build_cartesian_2d(x_min..x_max, (lat_min - lat_pad)..(lat_max + lat_pad))?;

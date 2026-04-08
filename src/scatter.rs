@@ -5,7 +5,7 @@ use std::error::Error;
 use crate::colormap::{blend_white, twilight_shifted};
 use crate::data::{DataBounds, Observation};
 
-pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     let (width, height) = (1800u32, 1200u32);
     let cbar_strip = 130u32;
 
@@ -22,7 +22,7 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<
         .margin(20u32)
         .x_label_area_size(50u32)
         .y_label_area_size(70u32)
-        .caption("Sandhill Crane Sightings (by Month)", ("sans-serif", 28))
+        .caption(format!("Sandhill Crane Sightings (by Month){subtitle}"), ("sans-serif", 28))
         .build_cartesian_2d(
             (bounds.min_lon - lon_pad)..(bounds.max_lon + lon_pad),
             (bounds.min_lat - lat_pad)..(bounds.max_lat + lat_pad),

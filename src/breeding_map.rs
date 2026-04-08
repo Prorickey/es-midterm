@@ -32,7 +32,7 @@ const CATEGORIES: &[Category] = &[
     },
 ];
 
-pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     let breeding_obs: Vec<&Observation> = obs
         .iter()
         .filter(|o| !o.breeding_code.is_empty())
@@ -50,7 +50,7 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<
         .margin(30u32)
         .x_label_area_size(50u32)
         .y_label_area_size(70u32)
-        .caption("Breeding Evidence Distribution", ("sans-serif", 28))
+        .caption(format!("Breeding Evidence Distribution{subtitle}"), ("sans-serif", 28))
         .build_cartesian_2d(
             (bounds.min_lon - lon_pad)..(bounds.max_lon + lon_pad),
             (bounds.min_lat - lat_pad)..(bounds.max_lat + lat_pad),

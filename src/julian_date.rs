@@ -5,7 +5,7 @@ use std::error::Error;
 use crate::colormap::{blend_white, twilight_shifted};
 use crate::data::Observation;
 
-pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     let points: Vec<(f64, f64)> = obs
         .iter()
         .map(|o| (o.date.year() as f64, o.date.ordinal() as f64))
@@ -30,7 +30,7 @@ pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
         .margin(20u32)
         .x_label_area_size(50u32)
         .y_label_area_size(70u32)
-        .caption("Julian Day of Observation by Year", ("sans-serif", 28))
+        .caption(format!("Julian Day of Observation by Year{subtitle}"), ("sans-serif", 28))
         .build_cartesian_2d(x_min..x_max, 0.0f64..366.0f64)?;
 
     chart

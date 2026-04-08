@@ -8,7 +8,7 @@ use crate::data::{DataBounds, Observation};
 const WINTER_COLOR: RGBColor = RGBColor(70, 130, 180);
 const SUMMER_COLOR: RGBColor = RGBColor(205, 92, 92);
 
-pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     let winter: Vec<&Observation> = obs
         .iter()
         .filter(|o| matches!(o.date.month(), 12 | 1 | 2))
@@ -28,9 +28,11 @@ pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<
     let lat_pad = (bounds.max_lat - bounds.min_lat) * 0.02;
     let lon_pad = (bounds.max_lon - bounds.min_lon) * 0.02;
 
+    let winter_title = format!("Winter (Dec\u{2013}Feb){subtitle}");
+    let summer_title = format!("Summer (Jun\u{2013}Aug){subtitle}");
     let seasons = [
-        ("Winter (Dec\u{2013}Feb)", &winter, WINTER_COLOR),
-        ("Summer (Jun\u{2013}Aug)", &summer, SUMMER_COLOR),
+        (winter_title.as_str(), &winter, WINTER_COLOR),
+        (summer_title.as_str(), &summer, SUMMER_COLOR),
     ];
 
     for (panel, (title, points, color)) in panels.iter().zip(seasons.iter()) {

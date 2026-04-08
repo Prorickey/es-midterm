@@ -9,7 +9,7 @@ const MONTH_LABELS: [&str; 12] = [
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
 ];
 
-pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     // Compute mean latitude per month (1..=12)
     let mut month_sums = [0.0f64; 12];
     let mut month_counts = [0u64; 12];
@@ -53,7 +53,7 @@ pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
         .margin(30u32)
         .x_label_area_size(50u32)
         .y_label_area_size(70u32)
-        .caption("Mean Latitude by Month", ("sans-serif", 28))
+        .caption(format!("Mean Latitude by Month{subtitle}"), ("sans-serif", 28))
         .build_cartesian_2d(0.5f64..12.5f64, (lat_min - lat_pad)..(lat_max + lat_pad))?;
 
     chart

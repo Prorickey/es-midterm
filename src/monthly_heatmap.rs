@@ -31,13 +31,13 @@ fn bin_observations(
     (grid, n_lat, n_lon)
 }
 
-pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], bounds: &DataBounds, path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     let (width, height) = (2400u32, 1800u32);
     let root = BitMapBackend::new(path, (width, height))
         .into_drawing_area();
     root.fill(&WHITE)?;
 
-    root.titled("Sandhill Crane Sightings by Month", ("sans-serif", 32))?;
+    root.titled(&format!("Sandhill Crane Sightings by Month{subtitle}"), ("sans-serif", 32))?;
 
     // Group observations by month
     let mut by_month: [Vec<&Observation>; 12] = Default::default();

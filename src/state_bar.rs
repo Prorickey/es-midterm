@@ -6,7 +6,7 @@ use crate::data::Observation;
 
 const BAR_COLOR: RGBColor = RGBColor(70, 130, 180);
 
-pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     let mut counts: HashMap<&str, u32> = HashMap::new();
     for o in obs {
         if !o.state.is_empty() {
@@ -36,7 +36,7 @@ pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
         .x_label_area_size(50u32)
         .y_label_area_size(200u32)
         .caption(
-            "Top 25 States by Observation Count",
+            format!("Top 25 States by Observation Count{subtitle}"),
             ("sans-serif", 28),
         )
         .build_cartesian_2d(

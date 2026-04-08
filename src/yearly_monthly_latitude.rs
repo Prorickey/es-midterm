@@ -10,7 +10,7 @@ fn year_month_to_x(year: i32, month: u32) -> f64 {
     year as f64 + (month as f64 - 1.0) / 12.0
 }
 
-pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
+pub fn generate(obs: &[Observation], path: &str, subtitle: &str) -> Result<(), Box<dyn Error>> {
     // Group by (year, month) and compute mean latitude
     let mut buckets: BTreeMap<(i32, u32), (f64, u64)> = BTreeMap::new();
     for o in obs {
@@ -73,7 +73,7 @@ pub fn generate(obs: &[Observation], path: &str) -> Result<(), Box<dyn Error>> {
         .x_label_area_size(50u32)
         .y_label_area_size(70u32)
         .caption(
-            "Monthly Mean Latitude Over Time",
+            format!("Monthly Mean Latitude Over Time{subtitle}"),
             ("sans-serif", 28),
         )
         .build_cartesian_2d(x_min..x_max, (lat_min - lat_pad)..(lat_max + lat_pad))?;
