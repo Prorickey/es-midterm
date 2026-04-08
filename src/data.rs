@@ -72,6 +72,9 @@ pub fn load_observations(path: &str) -> Result<(Vec<Observation>, DataBounds), B
             Some(v) => v,
             None => continue,
         };
+        if lon > 0.0 {
+            continue;
+        }
         let state = rec.get(state_idx).unwrap_or("").to_string();
         let count = rec.get(count_idx).and_then(|s| s.parse::<u32>().ok());
         let breeding_code = rec.get(breeding_code_idx).unwrap_or("").to_string();
